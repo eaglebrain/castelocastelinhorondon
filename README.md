@@ -1,6 +1,6 @@
 ![Castelo Castelinho Rondon](04.04.25.08.12.27.png)
 
-# Bem vindo ao meu repositório de arquivos e textos.
+# Bem-vindo ao meu repositório de arquivos e textos
 
 Se você está aqui para baixar algum arquivo ou para ler algum documento que eu te pedi ou te indiquei, simplesmente cace ele aí em cima na lista do repositório e baixe/leia.
 
