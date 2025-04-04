@@ -1,4 +1,4 @@
-![Castelo Castelinho Rondon](logotipo_castelo_castelinho_rondon.png)
+![Castelo Castelinho Rondon](04.04.25.08.12.27.png)
 
 # Bem vindo ao meu repositório de arquivos e textos.
 
