@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Ondas</title>
+  <style>
+    body{
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      background: linear-gradient(to top, #3b82f6, #1e3a8a);
+      overflow: hidden;
+    }
+    .waves{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 200px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200'><path fill='white' fill-opacity='0.3' d='M0,80 C300,200 900,0 1200,120 L1200,200 L0,200Z'></path></svg>") repeat-x;
+      background-size: 1200px 200px;
+      animation: wave 12s linear infinite;
+    }
+    @keyframes wave {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-600px); }
+    }
+    h1{ font-size: 3rem; margin-bottom: 1rem; }
+    p{ font-size: 1.25rem; max-width: 600px; }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Ondas Animadas 🌊</h1>
+    <p>Um fundo calmo, com efeito de movimento no rodapé.</p>
+  </div>
+  <div class="waves"></div>
+</body>
+</html>
