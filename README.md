@@ -37,7 +37,7 @@ arquivo   | hash
 <br>
 <br>
 
-_Como verificar a autenticidade desse texto por meio do seu hash SHA256?_
+_Como verificar a autenticidade do texto por meio do seu hash SHA256?_
 
 1. Copie e cole exatamente TODO o conteúdo do texto e NADA ALÉM do conteúdo do texto (do primeiro ao último caractere, nenhum a mais, nenhum a menos —qualquer mínima divergência gerará um hash completamente diferente);
 2. Descubra o hash SHA256 desse texto. Provavelmente, a forma mais fácil de fazer isso é por meio de um serviço web tal como este: `https://academo.org/demos/SHA-256-hash-generator/`, bastando colar o que você copiou na caixa de texto exibida. O hash aparecerá automaticamente no campo abaixo;
@@ -56,6 +56,7 @@ Entre em contato comigo:
 Atendo/respondo WhatsApp (e prefiro).
 
 Luís Felipe
+
 
 
 
