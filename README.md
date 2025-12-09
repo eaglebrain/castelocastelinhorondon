@@ -34,6 +34,15 @@ Nome do arquivo | Hash SHA256
 ------ | ------
 arquivo   | hash
 
+
+Como verificar a autenticidade desse texto por meio do seu hash SHA256?
+
+1 - Copie e cole exatamente TODO o conteúdo do texto e NADA ALÉM do conteúdo do texto (do primeiro ao último caractere, nenhum a mais, nenhum a menos —qualquer mínima divergência gerará um hash completamente diferente);
+2 - Descubra o hash SHA256 desse texto. Provavelmente, a forma mais fácil de fazer isso é por meio de um serviço web tal como este: `https://academo.org/demos/SHA-256-hash-generator/`, bastando colar o que você copiou na caixa de texto exibida. O hash aparecerá automaticamente no campo abaixo;
+3 - Vá até a página `https://github.com/eaglebrain/castelocastelinhorondon` e confira na seção "Certificação de autenticidade via hash SHA256" se o hash para o presente arquivo está lá, e se é idêntico ao que você obteve;
+4 - Você pode fazer essa conferência "no olho" (conferindo caractere por caractere; dá mais trabalho), ou então usando um diffchecker como este, por exemplo: `https://www.diffchecker.com/`;
+5 - Se os hashes forem idênticos, o texto é autêntico (legítimo de minha autoria). Se não for, o texto é apócrifo (falso ou está adulterado).
+
 ---
 
 Continua com dúvidas?
@@ -45,4 +54,5 @@ Entre em contato comigo:
 Atendo/respondo WhatsApp (e prefiro).
 
 Luís Felipe
+
 
