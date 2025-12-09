@@ -28,7 +28,10 @@ Se você está com dificuldade para encontrar, pode se guiar pela data (por exem
 
 ## Certificação de autenticidade via hash SHA256
 
-Aqui estão os hashes dos arquivos/textos que eu divulgo/assino/componho. **Esta página é a única fonte legítima em que você encontrará hashes de textos cuja autenticidade eu confirmo, por minha conta e responsabilidade.** Qualquer outra página, na web ou em redes sociais, eventualmente divulgando hashes em meu nome, **não conta com minha participação** e você deve desconfiar dela (e conferir aqui se o hash está listado; se não estiver, eu não garanto a autoria). Depois da lista de hashes, apresento um breve manual de como conferir a autenticidade de textos via hash SHA256.
+Aqui estão os hashes dos arquivos/textos que eu divulgo/assino/componho. **Esta página é a única fonte legítima em que você encontrará hashes de textos cuja autenticidade eu confirmo, por minha conta e responsabilidade.** 
+Qualquer outra página, na web ou em redes sociais, eventualmente divulgando hashes em meu nome, **não conta com minha participação** e você deve desconfiar dela (e conferir aqui se o hash está listado; se não estiver, eu não garanto a autoria). Depois da lista de hashes, apresento um breve manual de como conferir a autenticidade de textos via hash SHA256.
+
+<br>
 
 Nome do arquivo | Hash SHA256
 ------ | ------
@@ -56,6 +59,7 @@ Entre em contato comigo:
 Atendo/respondo WhatsApp (e prefiro).
 
 Luís Felipe
+
 
 
 
