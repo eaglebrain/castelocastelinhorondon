@@ -36,7 +36,7 @@ Qualquer outra página, na web ou em redes sociais, eventualmente divulgando has
 
 Nome do arquivo | Hash SHA256
 ------ | ------
-25.11.25.16.36.08 - 144.270-2025 - parecer - servidor - definição de efetivo exercício para benefícios | ae7c46d109de2216a880904606de5f23b5a8eee276eb9c84809cfe287c219ed1
+25.11.25.16.36.08 - 144.270-2025 - parecer - servidor - definição de efetivo exercício para benefícios | e7dc1e51b1efc773ca524f68a14f2f8ea89b3eb0ffdf005105de802b245b4a8d
 
 <br>
 <br>
@@ -60,6 +60,7 @@ Entre em contato comigo:
 Atendo/respondo WhatsApp (e prefiro).
 
 Luís Felipe
+
 
 
 
