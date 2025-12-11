@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Hotsite Template</title>
+    <style>
+        /* =========================================
+           CONFIGURAÇÕES (Variáveis)
+           ========================================= */
+        :root {
+            --story-duration: 5s; 
+            --primary-color: #fff;
+            --bg-color: #000;
+            --blur-bg: #222;
+        }
+
+        /* =========================================
+           CSS GERAL
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--blur-bg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none; /* Impede seleção de texto ao clicar rápido */
+        }
+
+        /* Container Principal */
+        .story-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 420px;
+            max-height: 900px;
+            background-color: var(--bg-color);
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+            cursor: pointer; /* Indica que é clicável */
+        }
+
+        /* Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out; /* Transição suave */
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none; /* Garante que o clique passe para o container */
+        }
+
+        .overlay-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Conteúdo */
+        .content {
+            position: relative;
+            padding: 24px;
+            color: var(--primary-color);
+            z-index: 10;
+            margin-bottom: 50px;
+            pointer-events: none; /* Deixa o clique passar, exceto nos botões */
+        }
+
+        /* Botão deve ser clicável */
+        .btn-action {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 15px;
+            pointer-events: auto; /* Reativa o clique no botão */
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Header */
+        .story-header {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            z-index: 20;
+            color: var(--primary-color);
+            pointer-events: none;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .username { font-size: 14px; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .time { font-size: 12px; opacity: 0.8; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+
+        /* Barras de Progresso */
+        .progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 5px;
+            display: flex;
+            gap: 4px;
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        .progress-item {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        /* Animação */
+        .slide.active .progress-fill {
+            animation: progressAnimation var(--story-duration) linear forwards;
+        }
+
+        .progress-item.viewed .progress-fill {
+            width: 100% !important;
+            animation: none;
+        }
+
+        @keyframes progressAnimation {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Principal (Onde o clique será detectado) -->
+    <div class="story-container" id="storyContainer">
+        
+        <!-- Header -->
+        <div class="progress-container" id="progressContainer"></div>
+        <div class="story-header">
+            <img src="https://i.postimg.cc/htWwmHc4/perfil-quadrado.jpg" class="user-avatar" alt="User">
+            <div class="user-info">
+                <div class="username">Luís Felipe Vicente Pires</div>
+                <div class="time">Agora mesmo</div>
+            </div>
+        </div>
+
+        <!-- SLIDES -->
+        
+        <!-- SLIDE 1: Apenas Imagem -->
+        <div class="slide active">
+            <img src="https://i.postimg.cc/xdrthHcH/25-07-25-18-16-01-bg-bauru.png" class="slide-bg" alt="Foto 1">
+            <div class="overlay-gradient"></div>
+            <div class="content">
+                <h2>Bem-vindo!</h2>
+                <p>Este é um template estilo Story totalmente ajustável.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Com Botão (O clique no botão não deve mudar o slide) -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="slide-bg">
+            <div class="overlay-gradient"></div>
+            <div class="content">
+                <h2>Nova Coleção</h2>
+                <p>Clique no botão abaixo. Ele funciona independentemente da navegação.</p>
+                <!-- Exemplo de botão -->
+                <a href="https://google.com" target="_blank" class="btn-action">Ver Oferta</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Cor Sólida e Texto -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" style="margin-bottom: auto; margin-top: auto; text-align: center;">
+                <h2>Texto Centralizado</h2>
+                <p>Você pode criar slides apenas com cores e tipografia para dar avisos importantes.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Cor Sólida e Texto 2 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" style="margin-bottom: auto; margin-top: auto; text-align: left;">
+                <h2>Vamos testar a criação de novos slides!</h2>
+                <p>Este é um slide que estou testando agora.</p>
+                <a href="https://google.com" target="_blank" class="btn-action">Veja a legislação aqui</a>
+                <br />
+                <br />
+                <p>E vou tentar fazer mais um parágrafo para ver se funciona direitinho.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const container = document.getElementById('storyContainer');
+        const slides = document.querySelectorAll('.slide');
+        const progressContainer = document.getElementById('progressContainer');
+        
+        let currentIndex = 0;
+        let slideInterval;
+        let isPaused = false; // Variável para pausar quando segura o clique (opcional)
+
+        // Pega o tempo do CSS
+        const cssDuration = getComputedStyle(document.documentElement).getPropertyValue('--story-duration').trim();
+        const slideDuration = parseFloat(cssDuration) * 1000;
+
+        // --- 1. Inicializa Barras ---
+        function initProgressBars() {
+            progressContainer.innerHTML = '';
+            slides.forEach(() => {
+                const item = document.createElement('div');
+                item.className = 'progress-item';
+                item.innerHTML = '<div class="progress-fill"></div>';
+                progressContainer.appendChild(item);
+            });
+        }
+
+        // --- 2. Mostra Slide ---
+        function showSlide(index) {
+            clearTimeout(slideInterval);
+
+            // Controle de limites
+            if (index >= slides.length) { index = 0; currentIndex = 0; resetProgressBars(); }
+            else if (index < 0) { index = 0; currentIndex = 0; }
+            else { currentIndex = index; }
+
+            // Atualiza Classes Visualmente
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === currentIndex) slide.classList.add('active');
+            });
+
+            // Atualiza Barras
+            const progressItems = document.querySelectorAll('.progress-item');
+            progressItems.forEach((item, i) => {
+                item.classList.remove('viewed');
+                const fill = item.querySelector('.progress-fill');
+                
+                // Reinicia animação do atual
+                if (i === currentIndex) {
+                    fill.style.animation = 'none';
+                    fill.offsetHeight; // trigger reflow
+                    fill.style.animation = null; 
+                } 
+                // Marca anteriores como vistos
+                else if (i < currentIndex) {
+                    item.classList.add('viewed');
+                }
+            });
+
+            // Inicia Timer do próximo
+            startTimer();
+        }
+
+        function startTimer() {
+            clearTimeout(slideInterval);
+            slideInterval = setTimeout(() => {
+                nextSlide();
+            }, slideDuration);
+        }
+
+        function resetProgressBars() {
+            document.querySelectorAll('.progress-item').forEach(i => i.classList.remove('viewed'));
+        }
+
+        function nextSlide() { showSlide(currentIndex + 1); }
+        function prevSlide() { showSlide(currentIndex - 1); }
+
+        // --- 3. LÓGICA DE CLIQUE INTELIGENTE ---
+        container.addEventListener('click', function(e) {
+            // Se o usuário clicou num botão ou link (tag A ou Button), não navega
+            if(e.target.closest('a') || e.target.closest('button')) {
+                return; 
+            }
+
+            // Pega a largura total do container
+            const rect = container.getBoundingClientRect();
+            const width = rect.width;
+            
+            // Pega a posição X do clique dentro do elemento
+            const clickX = e.clientX - rect.left;
+
+            // Define a área de clique (30% esquerda volta, 70% direita avança)
+            // Isso é melhor que 50/50 para facilitar o "avançar" com uma mão só
+            if (clickX < width * 0.30) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        });
+
+        // (Opcional) Pausar ao segurar o clique (Desktop/Mobile)
+        container.addEventListener('mousedown', () => { clearTimeout(slideInterval); });
+        container.addEventListener('touchstart', () => { clearTimeout(slideInterval); });
+        
+        // Soltar o clique retoma o timer
+        container.addEventListener('mouseup', startTimer);
+        container.addEventListener('touchend', startTimer);
+
+
+        // Iniciar
+        initProgressBars();
+        showSlide(0);
+
+    </script>
+</body>
+</html>
