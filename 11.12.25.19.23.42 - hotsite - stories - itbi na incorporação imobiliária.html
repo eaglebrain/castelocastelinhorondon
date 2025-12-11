@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procuradoria do Município de Bauru</title>
+    <style>
+        /* =========================================
+           CONFIGURAÇÕES (Variáveis)
+           ========================================= */
+        :root {
+            --story-duration: 10s; 
+            --primary-color: #fff;
+            --bg-color: #000;
+            --blur-bg: #222;
+        }
+
+        /* =========================================
+           CSS GERAL
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--blur-bg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none; /* Impede seleção de texto ao clicar rápido */
+        }
+
+        /* Container Principal */
+        .story-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 420px;
+            max-height: 900px;
+            background-color: var(--bg-color);
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+            cursor: pointer; /* Indica que é clicável */
+        }
+
+        /* Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out; /* Transição suave */
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none; /* Garante que o clique passe para o container */
+        }
+
+        .overlay-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Conteúdo */
+        .content {
+            position: relative;
+            padding: 24px;
+            color: var(--primary-color);
+            z-index: 10;
+            margin-bottom: 50px;
+            pointer-events: none; /* Deixa o clique passar, exceto nos botões */
+        }
+
+        /* Botão deve ser clicável */
+        .btn-action {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 15px;
+            pointer-events: auto; /* Reativa o clique no botão */
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Header */
+        .story-header {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            z-index: 20;
+            color: var(--primary-color);
+            pointer-events: none;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .username { font-size: 14px; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .time { font-size: 12px; opacity: 0.8; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+
+        /* Barras de Progresso */
+        .progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 8px 5px;
+            display: flex;
+            gap: 4px;
+            z-index: 30;
+        }
+
+        .progress-item {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        /* Animação */
+        .slide.active .progress-fill {
+            animation: progressAnimation var(--story-duration) linear forwards;
+        }
+
+        .progress-item.viewed .progress-fill {
+            width: 100% !important;
+            animation: none;
+        }
+
+        @keyframes progressAnimation {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Principal (Onde o clique será detectado) -->
+    <div class="story-container" id="storyContainer">
+        
+        <!-- Header -->
+        <div class="progress-container" id="progressContainer"></div>
+        <div class="story-header">
+            <img src="https://i.postimg.cc/W3GPygjC/11-12-25-17-36-14-brasao-PMB-fundo-verde-proporcao-menor.png" class="user-avatar" alt="User">
+            <div class="user-info">
+                <div class="username">Procuradoria do Município de Bauru</div>
+                <div class="time">Agora mesmo</div>
+            </div>
+        </div>
+
+        <!-- SLIDES -->
+        
+        <!-- SLIDE 0: Capa -->
+        <div class="slide active">
+            <img src="https://i.postimg.cc/xdrthHcH/25-07-25-18-16-01-bg-bauru.png" class="slide-bg" alt="Foto 1">
+            <div class="overlay-gradient"></div>
+            <div class="content">
+                <h1>ITBI nas Incorporações Imobiliárias</h1>
+                <br />
+                <h3>🔎 Análise da técnica de tributação</h3>
+            </div>
+        </div>
+
+        <!-- SLIDE X: padrão
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            // Sem imagem de fundo, usando CSS gradient inline //
+            <div class="content" >
+                <h2>TÍTULO</h2>
+                <p><b>Subtítulo</b></p>
+                <br />
+                <p>Corpo</p>
+            </div>
+        </div>
+        -->
+
+        <!-- SLIDE 1 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>🏢 ITBI NA INCORPORAÇÃO IMOBILIÁRIA</h2>
+                <p><b>A controvérsia sobre a Base de Cálculo na compra na planta</b></p>
+                <br />
+                <p>Existe uma dicotomia entre a realidade econômica do negócio (venda de imóvel pronto) e a tese de fracionamento da base de cálculo (tributação apenas sobre a fração ideal). Apresento uma análise técnica à luz das Súmulas do STF e do Tema 1.113 do STJ.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>🔑 O FATO GERADOR</h2>
+                <p><b>Obrigação de Dar vs. Obrigação de Fazer</b></p>
+                <br />
+                <p>Juridicamente, o adquirente na planta não contrata isoladamente a construção. Ele adquire <i>coisa futura</i>. O objeto do contrato é a unidade autônoma concluída; a segregação de custos é meramente contábil, não alterando a natureza da transmissão da propriedade plena.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>📜 SÚMULAS 110 E 470 DO STF</h2>
+                <p><b>A Necessidade de Superação (Overruling)</b></p>
+                <br />
+                <p>Editadas num contexto histórico de "construção a preço de custo", elas não refletem a incorporação moderna a preço fechado. Hoje, a construção adere ao solo antes da tradição, tornando a aplicação automática dessas súmulas um anacronismo jurídico.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>🏛️ TEMA 1.113 DO STJ</h2>
+                <p><b>Limites Interpretativos</b></p>
+                <br />
+                <p>O STJ vetou o arbitramento unilateral (Pautas de Valores) e reforçou a veracidade do valor declarado. Contudo, o Tema trata do <i>quantum</i> (valor), e não da definição objetiva do <i>an debeatur</i> (extensão da base de cálculo).</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>🔎 O DISTINGUISHING NECESSÁRIO</h2>
+                <p><b>Valor Declarado vs. Objeto Tributado</b></p>
+                <br />
+                <p>O Tema 1.113 impede o Fisco de arbitrar valor superior à transação, mas não o impede de exigir que o tributo incida sobre o valor total do contrato (terreno + obra). Isso respeita a realidade do negócio jurídico único declarado pelo contribuinte.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>💰 CAPACIDADE CONTRIBUTIVA</h2>
+                <p><b>A Realidade Econômica</b></p>
+                <br />
+                <p>Excluir a construção da base de cálculo gera descompasso com a Capacidade Contributiva. O valor de mercado — base do ITBI segundo o CTN — é o do imóvel edificado, que é o objeto final da transmissão imobiliária no registro.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>⚖️ TENDÊNCIA JURISPRUDENCIAL</h2>
+                <p><b>O Cenário nos Tribunais</b></p>
+                <br />
+                <p>Tribunais estaduais (como TJSP e TJRJ) já diferenciam casos atuais das Súmulas antigas. Consolida-se o entendimento de que a segurança jurídica do Tema 1.113 não ampara elisão fiscal via fracionamento artificial do objeto contratual.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide" style="background-color: #6a11cb; background-image: linear-gradient(167deg,rgba(57, 66, 69, 1) 14%, rgba(9, 105, 15, 1) 50%, rgba(7, 79, 29, 1) 91%);">
+            <!-- Sem imagem de fundo, usando CSS gradient inline -->
+            <div class="content" >
+                <h2>📄 ANÁLISE COMPLETA</h2>
+                <p><b>Aprofundamento Técnico</b></p>
+                <br />
+                <p>A correta interpretação do fato gerador exige rigor técnico para evitar passivos. Preparei um artigo detalhando a fundamentação jurídica e o <i>distinguishing</i> necessário.<br><br>📄 <b>Acesse o artigo completo no link abaixo.</b></p>
+                <a href="https://google.com" target="_blank" class="btn-action">Link para artigo completo</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const container = document.getElementById('storyContainer');
+        const slides = document.querySelectorAll('.slide');
+        const progressContainer = document.getElementById('progressContainer');
+        
+        let currentIndex = 0;
+        let slideInterval;
+        let isPaused = false; // Variável para pausar quando segura o clique (opcional)
+
+        // Pega o tempo do CSS
+        const cssDuration = getComputedStyle(document.documentElement).getPropertyValue('--story-duration').trim();
+        const slideDuration = parseFloat(cssDuration) * 1000;
+
+        // --- 1. Inicializa Barras ---
+        function initProgressBars() {
+            progressContainer.innerHTML = '';
+            slides.forEach(() => {
+                const item = document.createElement('div');
+                item.className = 'progress-item';
+                item.innerHTML = '<div class="progress-fill"></div>';
+                progressContainer.appendChild(item);
+            });
+        }
+
+        // --- 2. Mostra Slide ---
+        function showSlide(index) {
+            clearTimeout(slideInterval);
+
+            // Controle de limites
+            if (index >= slides.length) { index = 0; currentIndex = 0; resetProgressBars(); }
+            else if (index < 0) { index = 0; currentIndex = 0; }
+            else { currentIndex = index; }
+
+            // Atualiza Classes Visualmente
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === currentIndex) slide.classList.add('active');
+            });
+
+            // Atualiza Barras
+            const progressItems = document.querySelectorAll('.progress-item');
+            progressItems.forEach((item, i) => {
+                item.classList.remove('viewed');
+                const fill = item.querySelector('.progress-fill');
+                
+                // Reinicia animação do atual
+                if (i === currentIndex) {
+                    fill.style.animation = 'none';
+                    fill.offsetHeight; // trigger reflow
+                    fill.style.animation = null; 
+                } 
+                // Marca anteriores como vistos
+                else if (i < currentIndex) {
+                    item.classList.add('viewed');
+                }
+            });
+
+            // Inicia Timer do próximo
+            startTimer();
+        }
+
+        function startTimer() {
+            clearTimeout(slideInterval);
+            slideInterval = setTimeout(() => {
+                nextSlide();
+            }, slideDuration);
+        }
+
+        function resetProgressBars() {
+            document.querySelectorAll('.progress-item').forEach(i => i.classList.remove('viewed'));
+        }
+
+        function nextSlide() { showSlide(currentIndex + 1); }
+        function prevSlide() { showSlide(currentIndex - 1); }
+
+        // --- 3. LÓGICA DE CLIQUE INTELIGENTE ---
+        container.addEventListener('click', function(e) {
+            // Se o usuário clicou num botão ou link (tag A ou Button), não navega
+            if(e.target.closest('a') || e.target.closest('button')) {
+                return; 
+            }
+
+            // Pega a largura total do container
+            const rect = container.getBoundingClientRect();
+            const width = rect.width;
+            
+            // Pega a posição X do clique dentro do elemento
+            const clickX = e.clientX - rect.left;
+
+            // Define a área de clique (30% esquerda volta, 70% direita avança)
+            // Isso é melhor que 50/50 para facilitar o "avançar" com uma mão só
+            if (clickX < width * 0.30) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        });
+
+        // (Opcional) Pausar ao segurar o clique (Desktop/Mobile)
+        container.addEventListener('mousedown', () => { clearTimeout(slideInterval); });
+        container.addEventListener('touchstart', () => { clearTimeout(slideInterval); });
+        
+        // Soltar o clique retoma o timer
+        container.addEventListener('mouseup', startTimer);
+        container.addEventListener('touchend', startTimer);
+
+
+        // Iniciar
+        initProgressBars();
+        showSlide(0);
+
+    </script>
+</body>
+</html>
